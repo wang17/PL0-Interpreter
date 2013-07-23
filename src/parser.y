@@ -17,8 +17,8 @@ SymbolTable st;
 %output "src/parser.cpp"
 
 %union {
-	int INT;
-	char TEXT[64];
+    int INT;
+    char TEXT[64];
 }
 
 %token T_ODD
@@ -37,111 +37,111 @@ SymbolTable st;
 %token<INT> T_NUMBER
 
 %%
-program				: block T_DOT
-					;
+program             : block T_DOT
+                    ;
 
-block				:   {
-							st.levelUp();
-						}
-					  const_decl var_decl procedure_list statement
-						{
-							static int show = 1;
+block               :   {
+                            st.levelUp();
+                        }
+                      const_decl var_decl procedure_list statement
+                        {
+                            static int show = 1;
 
-							if (show)				// DEBUG
-								st.print();	show--;	// DEBUG
-							st.levelDown();
-						}
-					;
+                            if (show)               // DEBUG
+                                st.print(); show--; // DEBUG
+                            st.levelDown();
+                        }
+                    ;
 
 /* CONST */
-const_decl			: /*E*/
-					| T_CONST const_list T_SEMICOLON
-					;
+const_decl          : /*E*/
+                    | T_CONST const_list T_SEMICOLON
+                    ;
 
-const_list			: T_IDENT T_EQ T_NUMBER
-						{
-							st.insert($1, CONST);
-						}
-					| T_IDENT T_EQ T_NUMBER T_COMMA
-						{
-							st.insert($1, CONST);
-						}
-					  const_list
-					;
+const_list          : T_IDENT T_EQ T_NUMBER
+                        {
+                            st.insert($1, CONST);
+                        }
+                    | T_IDENT T_EQ T_NUMBER T_COMMA
+                        {
+                            st.insert($1, CONST);
+                        }
+                      const_list
+                    ;
 
 /* VAR */
-var_decl			: /*E*/
-					| T_VAR var_list T_SEMICOLON
-					;
+var_decl            : /*E*/
+                    | T_VAR var_list T_SEMICOLON
+                    ;
 
-var_list			: T_IDENT
-						{
-							st.insert($1, VAR);
-						}
-					| T_IDENT T_COMMA 
-						{
-							st.insert($1, VAR);
-						} 
-					  var_list
-					;
+var_list            : T_IDENT
+                        {
+                            st.insert($1, VAR);
+                        }
+                    | T_IDENT T_COMMA 
+                        {
+                            st.insert($1, VAR);
+                        } 
+                      var_list
+                    ;
 
 /* PROCEDURE */
-procedure_list		: /*E*/
-					| procedure T_SEMICOLON procedure_list
-					;
+procedure_list      : /*E*/
+                    | procedure T_SEMICOLON procedure_list
+                    ;
 
-procedure			: T_PROCEDURE T_IDENT 
-						{
-							st.insert($2, PROC);
-						}
-					  T_SEMICOLON block
-					;
+procedure           : T_PROCEDURE T_IDENT 
+                        {
+                            st.insert($2, PROC);
+                        }
+                      T_SEMICOLON block
+                    ;
 
 /* STATEMENT */
-statement 			: /*E*/
-					| T_IDENT T_ASSIGN expression
-					| T_CALL T_IDENT
-					| T_BEGIN statement_list T_END
-					| T_IF condition T_THEN statement
-					| T_WHILE condition T_DO statement
-					| T_DEBUG
-					| T_READ T_IDENT
-					| T_WRITE expression
-					;
+statement           : /*E*/
+                    | T_IDENT T_ASSIGN expression
+                    | T_CALL T_IDENT
+                    | T_BEGIN statement_list T_END
+                    | T_IF condition T_THEN statement
+                    | T_WHILE condition T_DO statement
+                    | T_DEBUG
+                    | T_READ T_IDENT
+                    | T_WRITE expression
+                    ;
 
-statement_list		: statement
-					| statement T_SEMICOLON statement_list
-					;
+statement_list      : statement
+                    | statement T_SEMICOLON statement_list
+                    ;
 
 /* CONDITION */
-condition			: T_ODD expression
-					| expression T_EQ expression
-					| expression T_HASH expression
-					| expression T_LT expression
-					| expression T_LE expression
-					| expression T_GT expression
-					| expression T_GE expression
-					;
+condition           : T_ODD expression
+                    | expression T_EQ expression
+                    | expression T_HASH expression
+                    | expression T_LT expression
+                    | expression T_LE expression
+                    | expression T_GT expression
+                    | expression T_GE expression
+                    ;
 
 /* EXPRESSION */
-expression 			: term
-					| expression T_ADD term
-					| expression T_SUB term
-					;
+expression          : term
+                    | expression T_ADD term
+                    | expression T_SUB term
+                    ;
 
 /* TERM */
-term 				: factor
-					| term T_MUL factor
-					| term T_DIV factor
-					;
+term                : factor
+                    | term T_MUL factor
+                    | term T_DIV factor
+                    ;
 
 /* FACTOR */
-factor  			: T_IDENT
-					| T_NUMBER
-					| T_BRO expression T_BRC
-					| T_ADD factor
-					| T_SUB factor
-					;
+factor              : T_IDENT
+                    | T_NUMBER
+                    | T_BRO expression T_BRC
+                    | T_ADD factor
+                    | T_SUB factor
+                    ;
 %%
 
 int yyerror(const char* s) {
