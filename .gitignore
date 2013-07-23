@@ -11,3 +11,9 @@
 *.lai
 *.la
 *.a
+
+# Generated files
+src/scanner.cpp
+src/scanner.hpp
+src/parser.cpp
+src/parser.hpp
