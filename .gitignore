@@ -17,3 +17,6 @@ src/scanner.cpp
 src/scanner.hpp
 src/parser.cpp
 src/parser.hpp
+
+# Compiled binary
+PL0-Interpreter
