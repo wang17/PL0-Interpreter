@@ -1,6 +1,6 @@
-#include "SymbolTable.hpp"
+#include "symbolTable.hpp"
 
-SymbolTableEntry::SymbolTableEntry(symbolType type, int offset) {
+SymbolTableEntry::SymbolTableEntry(int type, int offset) {
     this->type = type;
     this->offset = offset;
 }
@@ -27,7 +27,7 @@ void SymbolTable::levelDown() {
     }
 }
 
-int SymbolTable::insert(string name, symbolType type) {
+int SymbolTable::insert(string name, int type) {
     int offset = content[level].size();
 
     if (content[level].find(name) != content[level].end())
@@ -44,7 +44,7 @@ int SymbolTable::insert(string name, symbolType type) {
     return 0;
 }
 
-int SymbolTable::lookup(string name, symbolType type, int &level, int &offset) {
+int SymbolTable::lookup(string name, int type, int &level, int &offset) {
     map<int, map<string, SymbolTableEntry> >::iterator mlevel;
 
     for (mlevel = content.begin(); mlevel != content.end(); mlevel++) {

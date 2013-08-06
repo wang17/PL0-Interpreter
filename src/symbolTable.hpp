@@ -12,15 +12,15 @@ using std::string;
 using std::cout;
 using std::endl;
 
-enum symbolType { CONST, VAR, PROC };
+enum symbolType { ST_CONST, ST_VAR, ST_PROC };
 
 class SymbolTableEntry {
     friend class SymbolTable;
 public:
-    SymbolTableEntry(symbolType type = CONST, int offset = 0);
+    SymbolTableEntry(int type = ST_CONST, int offset = 0);
 
 private:
-    symbolType type;
+    int type;
     int offset;
 };
 
@@ -30,8 +30,8 @@ public:
 
     void levelUp();
     void levelDown();
-    int insert(string name, symbolType type);
-    int lookup(string name, symbolType type, int &level, int &offset);
+    int insert(string name, int type);
+    int lookup(string name, int type, int &level, int &offset);
     void print();
 
 private:
@@ -39,4 +39,4 @@ private:
     int level;
 };
 
-#endif /* PL0_SYMBOLTABLE_HPP_ */
+#endif /* SYMBOLTABLE_HPP_ */

@@ -1,6 +1,6 @@
 CXXFLAGS	= -O2 -fmessage-length=0
 
-OBJS		= src/main.o src/scanner.o src/parser.o src/SymbolTable.o
+OBJS		= src/main.o src/scanner.o src/parser.o src/symbolTable.o src/ast.o
 
 LIBS 		= -ll -ly
 
